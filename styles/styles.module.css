@@ -1,20 +1,16 @@
-.shadow {
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-}
-
 .ul {
     width: 400px;
 }
 
 .planneranim {
     opacity: 0;
-    top: 20px;
+    top: 100%;
     animation: planneranim 0.3s ease-in-out forwards;
 }
 
 @keyframes planneranim {
-    30% {
-        top: -10px;
+    50% {
+        top: -30px;
         opacity: 1;
     }
     100% {

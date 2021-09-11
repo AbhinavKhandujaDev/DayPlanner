@@ -6,7 +6,7 @@ const Modal = ({ children, onClick }) => {
       id="modal"
       style={{ background: "rgba(0,0,0, 0.3)" }}
       className="w-screen h-screen absolute top-0 left-0 flex items-center justify-center z-10"
-      onClick={(e) => {
+      onMouseDown={(e) => {
         if (e.target.id === "modal") onClick && onClick();
       }}
     >

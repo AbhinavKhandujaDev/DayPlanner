@@ -3,6 +3,7 @@ import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_green.css";
 import styles from "./PlannerView.module.css";
 import { Task } from "../../Models/TaskInterfaces";
+import { getTime, getDifference } from "../../helper";
 
 const TitleInputView: FC<any> = memo((props) => {
   return (
@@ -15,21 +16,17 @@ const TitleInputView: FC<any> = memo((props) => {
   );
 });
 
-let task: Task = {};
-
 interface PlannerProps {
+  data?: Task | null;
   className: string;
   onAdd: (obj: Task) => void;
 }
 
 const PlannerView: FC<PlannerProps> = (props) => {
   const [state, setstate] = useState<any>({
-    task,
+    task: props.data || {},
     error: "",
   });
-  useEffect(() => {
-    setTaskState({ date: new Date() });
-  }, []);
 
   const setTaskState = (vals: any) => {
     setstate({ ...state, task: { ...state.task, ...vals } });
@@ -59,6 +56,12 @@ const PlannerView: FC<PlannerProps> = (props) => {
         status: false,
         message: "End time and start time cannot be equal",
       };
+    } else if (getDifference(state.task?.start, state.task?.end) < 1) {
+      return {
+        status: false,
+        message:
+          "There should be atleast 1 minute's difference between start and end times",
+      };
     } else {
       return { status: true };
     }
@@ -75,6 +78,7 @@ const PlannerView: FC<PlannerProps> = (props) => {
           <input
             className={`py-2 px-3 ${styles.input}`}
             placeholder="Enter title"
+            defaultValue={state.task?.name}
             onChange={(e) => setTaskState({ name: e.target.value })}
           />
         </TitleInputView>
@@ -94,8 +98,8 @@ const PlannerView: FC<PlannerProps> = (props) => {
               enableTime: true,
               noCalendar: true,
               dateFormat: "H:i",
-              // defaultDate: state?.task?.date,
-              minDate: state?.task?.date,
+              defaultDate: getTime(state?.task?.start),
+              // minDate: state?.task?.date,
             }}
             className={`py-2 px-3 ${styles.input}`}
             placeholder="Select Date"
@@ -108,18 +112,18 @@ const PlannerView: FC<PlannerProps> = (props) => {
               enableTime: true,
               noCalendar: true,
               dateFormat: "H:i",
-              // defaultDate: state?.task?.date,
-              minDate: state?.task?.date,
+              defaultDate: getTime(state?.task?.end),
+              // minDate: state?.task?.date,
             }}
             className={`py-2 px-3 ${styles.input}`}
             placeholder="Select Date"
             onChange={(e: any) => setTaskState({ end: e[0] })}
           />
         </TitleInputView>
-        <div className="my-3 w-full flex items-center justify-center flex-col">
-          <div className="h-5 text-red-600 font-medium mb-3">{state.error}</div>
+        <div className="my-3 w-full flex items-center flex-col">
+          <div className="text-red-600 font-medium mb-3 text-center">{state.error}</div>
           <div
-            className="w-3/4 text-center bg-green-600 text-white px-8 py-2 text-lg font-medium rounded-full cursor-pointer"
+            className="shadow w-3/4 text-center bg-green-500 text-white px-8 py-2 text-lg font-medium rounded-full cursor-pointer"
             onClick={() => {
               let status = isAllValid();
               status.status ? props.onAdd(state.task) : {};
