@@ -1,0 +1,9 @@
+.input {
+    border: 2px solid #CDD9ED;
+    border-radius: 6px;
+    outline: none
+}
+
+.plannerview {
+    width: 400px;
+}
