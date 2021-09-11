@@ -66,9 +66,9 @@ const PlannerView: FC<PlannerProps> = (props) => {
 
   return (
     <div
-      className={`flex items-start justify-center ${styles.plannerview} ${props.className}`}
+      className={`PlannerView relative flex items-start justify-center ${styles.plannerview} ${props.className}`}
     >
-      <div className="rounded-xl filter blur-sm w-full h-full absolute bg-green-500 opacity-40 top-0"></div>
+      <div className="rounded-xl w-full h-full absolute bg-gray-50 top-0"></div>
       <div className="z-10 flex items-center flex-col">
         <div className="text-3xl my-5">Add a plan</div>
         <TitleInputView title="Task Name: ">

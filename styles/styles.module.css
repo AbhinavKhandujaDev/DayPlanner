@@ -2,11 +2,23 @@
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
-#myportal {
-    width: 100vw;
-    height: 100vh;
-}
-
 .ul {
     width: 400px;
+}
+
+.planneranim {
+    opacity: 0;
+    top: 20px;
+    animation: planneranim 0.3s ease-in-out forwards;
+}
+
+@keyframes planneranim {
+    30% {
+        top: -10px;
+        opacity: 1;
+    }
+    100% {
+        top: 0px;
+        opacity: 1;
+    }
 }

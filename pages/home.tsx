@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Header from "../Components/header/Header";
 import styles from "../styles/styles.module.css";
 import PlannerView from "../Components/PlannerView/PlannerView";
+import Modal from "../Components/Modal";
 
 import { ListModel, Task } from "../Models/TaskInterfaces";
 
@@ -118,9 +119,16 @@ const home = () => {
                   className={`mb-2 rounded-lg bg-white w-full bg-row-green h-16 flex items-center px-3 justify-between ${styles.shadow} ${styles.ul}`}
                 >
                   <div className="text-white font-bold">{task.name}</div>
-                  <div className="text-white font-bold">{`${getTime(
-                    task.start
-                  )} to ${getTime(task.end)}`}</div>
+                  <div className="text-white font-bold flex">
+                    {`${getTime(task.start)} to ${getTime(task.end)}`}{" "}
+                    <img
+                      className="ml-5 cursor-pointer"
+                      width="20px"
+                      height="20px"
+                      src="/images/edit-icon.svg"
+                      alt=""
+                    />
+                  </div>
                 </div>
               ))}
             </li>
@@ -135,7 +143,9 @@ const home = () => {
         </div>
       </div>
       {state?.showModal ? (
-        <PlannerView className="absolute top-32" onAdd={addTask} />
+        <Modal onClick={() => setstate({ ...state, showModal: false })}>
+          <PlannerView className={`${styles.planneranim}`} onAdd={addTask} />
+        </Modal>
       ) : null}
     </div>
   );
