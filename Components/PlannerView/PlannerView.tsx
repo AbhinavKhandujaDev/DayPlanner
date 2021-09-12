@@ -1,4 +1,4 @@
-import { useState, useEffect, memo, FC } from "react";
+import { useState, memo, FC } from "react";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_green.css";
 import styles from "./PlannerView.module.css";
@@ -156,6 +156,4 @@ const PlannerView: FC<PlannerProps> = (props) => {
   );
 };
 
-export default memo(PlannerView, (prev: PlannerProps, next: PlannerProps) => {
-  return false;
-});
+export default memo(PlannerView);
