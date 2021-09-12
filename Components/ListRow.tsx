@@ -13,7 +13,7 @@ const ListRow = (props: any) => {
       {obj.tasks?.map((task: Task, i: number) => (
         <div
           key={i}
-          className={`mb-2 rounded-lg bg-white w-full bg-row-green h-16 flex items-center px-3 justify-between shadow ${styles.ul}`}
+          className="mb-2 flex-wrap rounded-lg bg-white w-full bg-row-green h-16 flex items-center px-3 justify-between shadow"
         >
           <div className="truncate text-white font-bold">{task.name}</div>
           <div className="text-white font-bold flex flex-shrink-0">

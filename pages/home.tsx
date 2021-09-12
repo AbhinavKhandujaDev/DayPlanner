@@ -103,7 +103,7 @@ const home = () => {
         {state?.tasklist.length === 0 ? (
           <div className="text-5xl mt-32 text-gray-500">No tasks yet</div>
         ) : (
-          <ul>
+          <ul className={styles.ul}>
             {state?.tasklist?.map((obj: ListModel, i: number) => (
               <ListRow
                 obj={obj}
@@ -176,7 +176,7 @@ const home = () => {
                 title: "Task Breakdown in min(s)",
                 backgroundColor: "#f9fafb",
                 height: 400,
-                chartArea: { height: "90%", width: "90%" },
+                chartArea: { left: 30, height: "85%", width: "85%" },
               }}
             />
           </div>
