@@ -17,9 +17,10 @@ const TitleInputView: FC<any> = memo((props) => {
 });
 
 interface PlannerProps {
-  data?: Task | null;
+  data?: any | null;
   className: string;
   onAdd: (obj: Task) => void;
+  onUpdate: (obj: any, section: number, item: number) => void;
 }
 
 const PlannerView: FC<PlannerProps> = (props) => {
@@ -39,6 +40,11 @@ const PlannerView: FC<PlannerProps> = (props) => {
       return { status: false, message: "Please select a date" };
     } else if (!state.task?.start) {
       return { status: false, message: "Please enter start time" };
+    } else if (state.task?.start < Date.now()) {
+      return {
+        status: false,
+        message: "Start time cannot less than current time",
+      };
     } else if (state.task?.start > state.task?.end) {
       return {
         status: false,
@@ -73,7 +79,7 @@ const PlannerView: FC<PlannerProps> = (props) => {
     >
       <div className="rounded-xl w-full h-full absolute bg-gray-50 top-0"></div>
       <div className="z-10 flex items-center flex-col">
-        <div className="text-3xl my-5">Add a plan</div>
+        <div className="text-3xl my-5">Add a Task</div>
         <TitleInputView title="Task Name: ">
           <input
             className={`py-2 px-3 ${styles.input}`}
@@ -89,7 +95,9 @@ const PlannerView: FC<PlannerProps> = (props) => {
             value={state?.task?.date}
             className={`py-2 px-3 ${styles.input}`}
             placeholder="yyyy-mm-dd"
-            onChange={(e: any) => setTaskState({ date: e[0] })}
+            onChange={(e: any) =>
+              setTaskState({ date: e[0], start: null, end: null })
+            }
           />
         </TitleInputView>
         <TitleInputView title="Start: ">
@@ -99,7 +107,7 @@ const PlannerView: FC<PlannerProps> = (props) => {
               noCalendar: true,
               dateFormat: "H:i",
               defaultDate: getTime(state?.task?.start),
-              // minDate: state?.task?.date,
+              minDate: state?.task?.date?.toLocaleDateString() || Date.now(),
             }}
             className={`py-2 px-3 ${styles.input}`}
             placeholder="Select Date"
@@ -113,7 +121,7 @@ const PlannerView: FC<PlannerProps> = (props) => {
               noCalendar: true,
               dateFormat: "H:i",
               defaultDate: getTime(state?.task?.end),
-              // minDate: state?.task?.date,
+              minDate: state?.task?.date,
             }}
             className={`py-2 px-3 ${styles.input}`}
             placeholder="Select Date"
@@ -121,16 +129,26 @@ const PlannerView: FC<PlannerProps> = (props) => {
           />
         </TitleInputView>
         <div className="my-3 w-full flex items-center flex-col">
-          <div className="text-red-600 font-medium mb-3 text-center">{state.error}</div>
+          <div className="text-red-600 font-medium mb-3 text-center">
+            {state.error}
+          </div>
           <div
             className="shadow w-3/4 text-center bg-green-500 text-white px-8 py-2 text-lg font-medium rounded-full cursor-pointer"
             onClick={() => {
               let status = isAllValid();
-              status.status ? props.onAdd(state.task) : {};
+              if (status.status) {
+                props.data
+                  ? props.onUpdate(
+                      state.task,
+                      props.data.section,
+                      props.data.item
+                    )
+                  : props.onAdd(state.task);
+              }
               setstate({ ...state, error: status.message });
             }}
           >
-            Add
+            {props.data ? "Update" : "Add"}
           </div>
         </div>
       </div>
