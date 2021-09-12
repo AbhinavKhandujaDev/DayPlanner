@@ -107,7 +107,7 @@ const PlannerView: FC<PlannerProps> = (props) => {
               noCalendar: true,
               dateFormat: "H:i",
               defaultDate: getTime(state?.task?.start),
-              minDate: state?.task?.date?.toLocaleDateString() || Date.now(),
+              minDate: state?.task?.date || Date.now(),
             }}
             className={`py-2 px-3 ${styles.input}`}
             placeholder="Select Date"

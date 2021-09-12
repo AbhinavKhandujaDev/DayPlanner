@@ -31,8 +31,12 @@ const home = () => {
 
   useEffect(() => {
     (async () => {
-      let arr = JSON.parse(localStorage.getItem("tasks") || "");
-      if (arr.length === 0) return;
+      let savedTasks = localStorage.getItem("tasks") || [];
+      if (savedTasks.length === 0) {
+        setstate({ ...state, loading: false });
+        return;
+      }
+      let arr = JSON.parse(`${savedTasks}`) || [];
       let newArr = arr.map((item: any) => {
         item.date = new Date(item.date);
         let tasks = item.tasks?.map((obj: any) => {
