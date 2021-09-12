@@ -9,7 +9,7 @@ const TitleInputView: FC<any> = memo((props) => {
   return (
     <div className="flex items-end mb-3 flex-col">
       <div className="flex items-center">
-        <div className="mr-3 w-24">{props.title}</div>
+        <div className="mr-3 w-24 text-right">{props.title}</div>
         {props.children}
       </div>
     </div>
@@ -35,7 +35,7 @@ const PlannerView: FC<PlannerProps> = (props) => {
 
   const isAllValid = () => {
     if (!state.task?.name || state.task?.name === "") {
-      return { status: false, message: "Please enter a plan name" };
+      return { status: false, message: "Please enter a task name" };
     } else if (!state.task?.date) {
       return { status: false, message: "Please select a date" };
     } else if (!state.task?.start) {
