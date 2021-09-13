@@ -91,7 +91,7 @@ const PlannerView: FC<PlannerProps> = (props) => {
 
         <TitleInputView title="Date: ">
           <Flatpickr
-            options={{ minDate: state?.task?.date }}
+            options={{ minDate: state?.task?.date || Date.now() }}
             value={state?.task?.date}
             className={`py-2 px-3 ${styles.input}`}
             placeholder="yyyy-mm-dd"
